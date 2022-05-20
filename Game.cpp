@@ -5,7 +5,7 @@ void Game::initVaribles(){
     this->window = nullptr;
     //Logika gry//
     this->points = 0;
-    this->enemySpawnTimerMax = 1000.f;
+    this->enemySpawnTimerMax = 10.f;
     this->enemySpawnTimer = this->enemySpawnTimerMax;
     this->maxEnemies = 5;
 
@@ -29,9 +29,6 @@ void Game::initEnemies(){
     this->enemy.setRadius(50.f);
     this->enemy.setScale(sf::Vector2f(0.5f,0.5f));
     this->enemy.setFillColor(sf::Color::Green);
-    this->enemy.setOutlineColor(sf::Color::Black);
-    this->enemy.setOutlineThickness(1.f);
-
 
 }
 
@@ -89,6 +86,8 @@ void Game::updateMousePositions(){
 
     this->mousePosition = sf::Mouse::getPosition(*this->window);
 
+    this->mousePositionView = this->window->mapPixelToCoords(this->mousePosition);
+
 }
 void Game::updateEnemies(){
     
@@ -103,9 +102,35 @@ void Game::updateEnemies(){
         
     }
     //Ruch objektów(wrogów)//
-    for (auto &i : this->enemies)
+    for (int i = 0;i < this->enemies.size();i++)
     {
-        i.move(0.f,5.f);
+        bool deleted = false;
+        
+        this->enemies[i].move(0.f,2.f);
+
+        //Jeśli klikniemy na objekt(wroga)//
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+
+            if(this->enemies[i].getGlobalBounds().contains(this->mousePositionView)){
+
+                deleted = true;
+
+            }
+        }
+
+        //Jeśli obiekt spadnie i dotknie ekranu dolnego//
+        if(this->enemies[i].getPosition().y > this->window->getSize().y){
+
+            deleted = true;
+
+        }
+        //Jeśli jest do usunięcia//
+        if(deleted){
+
+            this->enemies.erase(this->enemies.begin() + i);
+
+        }
+        
     }
     
 }

@@ -18,6 +18,7 @@ private:
 
 //Pozycja myszki//    
 sf::Vector2i mousePosition;
+sf::Vector2f mousePositionView;
 
 //Logika gry//
 
