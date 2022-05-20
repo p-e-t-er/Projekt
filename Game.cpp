@@ -115,6 +115,8 @@ void Game::updateEnemies(){
 
                 deleted = true;
 
+                this->points += 1;
+
             }
         }
 
@@ -147,8 +149,9 @@ void Game::update(){
     //W stosunku do całego ekranu//
     //std::cout << "Mouse pos: " << sf::Mouse::getPosition().x <<" "<< sf::Mouse::getPosition().y << "\n";//
     //W stosunku do okna//
-    std::cout << "Mouse pos: " << sf::Mouse::getPosition(*this->window).x <<" "<< sf::Mouse::getPosition(*this->window).y << "\n";
+    //std::cout << "Mouse pos: " << sf::Mouse::getPosition(*this->window).x <<" "<< sf::Mouse::getPosition(*this->window).y << "\n";
 
+    std::cout << "Points:" << this->points << std::endl;
 
 }
 void Game::renderEnemies(){
